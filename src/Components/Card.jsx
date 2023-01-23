@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid'
 import './Index.css'
 import Form from './Form'
 
-const LOCAL_STORAGE_KEY = 'todo:savedTasks'
 
 export default function Card() {
   const [data, setData] = useState([])
@@ -17,20 +16,8 @@ export default function Card() {
   console.log(edited)
   console.log('object', formData)
 
-  function loadSavedTasks() {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
-    if (saved === undefined) return
-    if (saved) setData(JSON.parse(saved))
-  }
 
-  useEffect(() => {
-    loadSavedTasks()
-  }, [])
 
-  function setTasksAndSave(newTasks) {
-    setData(newTasks)
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newTasks))
-  }
 
   //  Add / Update the data into the Api by clicking the form submit
 
@@ -38,6 +25,9 @@ export default function Card() {
     const { name, value } = event.target
     setFormData({ ...formData, [name]: value })
   }
+
+
+
 
   const editData = () => {
     const update = {
@@ -51,6 +41,9 @@ export default function Card() {
     setData([...formData, response])
   }
 
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -58,9 +51,14 @@ export default function Card() {
       id: uuidv4(),
       ...formData,
     }
+	window.location.reload();
     const response = axios.post('http://localhost:3000/employees', request)
-    setTasksAndSave([...formData, response])
+    setData([...formData, response])
   }
+
+
+
+
 
   //   handle edit section
 
@@ -71,15 +69,11 @@ export default function Card() {
     console.log(editItem)
     setFormData(editItem)
     setEdited(id)
-
-    // const request = {
-    //   id: id,
-    //   ...formData,
-    // }
-    // axios.put(`http://localhost:3000/employees/${id}`, request).then((res) => {
-    //   setData([...formData])
-    // })
   }
+
+
+
+
 
   //    deleting the data from API
 
@@ -89,7 +83,13 @@ export default function Card() {
     })
     const deleteItem = data.filter((item) => id !== item)
     setData(deleteItem)
+	window.location.reload();
   }
+
+
+
+
+
 
   // getting the data from the API
 
@@ -101,6 +101,11 @@ export default function Card() {
         console.log('errrrr', err)
       })
   }, [])
+
+
+
+
+
 
   // data mapping and adding to the panel
 
