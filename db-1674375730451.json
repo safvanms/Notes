@@ -1,0 +1,22 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "John Smith",
+      "place": "New York",
+      "designation": "Manager"
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "place": "Los Angeles",
+      "designation": "Developer"
+    },
+    {
+      "id": 3,
+      "name": "Bob Johnson",
+      "place": "Chicago",
+      "designation": "Designer"
+    }
+  ]
+}
